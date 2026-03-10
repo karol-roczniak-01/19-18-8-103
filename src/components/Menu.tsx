@@ -1,57 +1,46 @@
 import { useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import useMobile from '../hooks/useMobile'
-
-interface MenuItem {
-  label: string
-  desc: string
-  href: string
-}
-
-const options: MenuItem[] = [
-  { label: '53-95', desc: 'Your account', href: 'https://5395.19188103.com' },
-  { label: '13-3-99', desc: 'People directory', href: 'https://13399.19188103.com' },
-  { label: '9-13-34', desc: 'Refute false sources', href: 'https://91334.19188103.com' },
-  { label: '5-92-39', desc: 'AI-powered tenders', href: 'https://59239.19188103.com' },
-  { label: '1-8-74', desc: 'Docs, guides, and terms', href: 'https://1874.19188103.com' },
-]
+import { t } from '../languages'
 
 const Menu: React.FC = () => {
   const isMobile = useMobile()
   const [selected, setSelected] = useState(0)
 
+  const options = [
+    { label: '53-95',   desc: t('accountDesc'),   href: 'https://5395.19188103.com' },
+    { label: '13-3-99', desc: t('directoryDesc'), href: 'https://13399.19188103.com' },
+    { label: '9-13-34', desc: t('refuteDesc'),    href: 'https://91334.19188103.com' },
+    { label: '5-92-39', desc: t('tendersDesc'),   href: 'https://59239.19188103.com' },
+    { label: '1-8-74',  desc: t('docsDesc'),      href: 'https://1874.19188103.com' },
+  ]
+
   const handleSelect = (index: number) => {
     window.location.href = options[index].href
   }
 
-  useHotkeys('down', (e) => {
-    e.preventDefault()
-    setSelected((prev) => (prev + 1) % options.length)
-  })
-
-  useHotkeys('up', (e) => {
-    e.preventDefault()
-    setSelected((prev) => (prev - 1 + options.length) % options.length)
-  })
-
-  useHotkeys('enter', (e) => {
-    e.preventDefault()
-    handleSelect(selected)
-  })
+  useHotkeys('down',  (e) => { e.preventDefault(); setSelected((p) => (p + 1) % options.length) })
+  useHotkeys('up',    (e) => { e.preventDefault(); setSelected((p) => (p - 1 + options.length) % options.length) })
+  useHotkeys('enter', (e) => { e.preventDefault(); handleSelect(selected) })
 
   return (
-    <ul>
-      {options.map((option, index) => (
-        <li
-          key={index}
-          onMouseEnter={() => setSelected(index)}
-          onClick={() => handleSelect(index)}
-          className={!isMobile && selected === index ? 'bg-primary text-background cursor-default' : 'cursor-default'}
-        >
-          {option.label} · {option.desc}
-        </li>
-      ))}
-    </ul>
+    <>
+      <p className="border-b-4 border-double pb-2">
+        {t('welcome')}
+      </p>
+      <ul>
+        {options.map((option, index) => (
+          <li
+            key={index}
+            onMouseEnter={() => setSelected(index)}
+            onClick={() => handleSelect(index)}
+            className={!isMobile && selected === index ? 'bg-primary text-background cursor-default' : 'cursor-default'}
+          >
+            {option.label} · {option.desc}
+          </li>
+        ))}
+      </ul>
+    </>
   )
 }
 

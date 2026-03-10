@@ -1,5 +1,10 @@
+---
+import type { Language } from '../languages/texts'
+const lang = (Astro.cookies.get('lang')?.value === 'pl' ? 'pl' : 'en') as Language
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
