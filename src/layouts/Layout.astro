@@ -1,20 +1,23 @@
 ---
-import type { Language } from '../languages/texts'
-const lang = (Astro.cookies.get('lang')?.value === 'pl' ? 'pl' : 'en') as Language
+import '../styles/global.css'
 ---
 
 <!doctype html>
-<html lang={lang}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="theme-color" content="#000000" />
-		<title>19-18-8-103</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#000000" />
+    <title>19-18-8-103</title>
+    <script is:inline>
+      const match = document.cookie.match(/(?:^|;\s*)lang=([^;]*)/)
+      document.documentElement.lang = match?.[1] === 'pl' ? 'pl' : 'en'
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>

@@ -1,11 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import useMobile from '../hooks/useMobile'
-import { t } from '../languages'
+import { t, getLang } from '../languages'
+import type { Language } from '../languages/texts'
 
 const Menu: React.FC = () => {
   const isMobile = useMobile()
   const [selected, setSelected] = useState(0)
+  const [lang, setLang] = useState<Language>('en')
+
+  useEffect(() => {
+    setLang(getLang())
+  }, [])
 
   const options = [
     { label: '53-95',   desc: t('accountDesc'),   href: 'https://5395.19188103.com' },
